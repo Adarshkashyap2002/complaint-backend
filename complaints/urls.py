@@ -8,3 +8,9 @@ router.register(r'complaints', ComplaintViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+
+from .views import create_user
+
+urlpatterns += [
+    path("create-user/", create_user),
+]
