@@ -22,19 +22,6 @@ from pathlib import Path
 
 from datetime import timedelta
 
-
-
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-if not User.objects.filter(username="admin").exists():
-    User.objects.create_superuser("admin", "admin@example.com", "admin123")
-
-
-
-
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -178,3 +165,18 @@ CORS_ALLOWED_ORIGINS = [
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+import os
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+try:
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="admin123"
+        )
+        print("Superuser created: admin / admin123")
+except Exception as e:
+    print("Superuser creation skipped:", e)
