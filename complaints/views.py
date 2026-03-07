@@ -2,8 +2,12 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-@api_view(["POST"])
+@api_view(["GET", "POST"])
 def create_user(request):
+
+    if request.method == "GET":
+        return Response({"message": "Send POST request with username and password"})
+
     username = request.data.get("username")
     password = request.data.get("password")
 
