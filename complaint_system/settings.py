@@ -164,3 +164,25 @@ CORS_ALLOWED_ORIGINS = [
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+import os
+from django.contrib.auth.models import User
+
+def create_admin():
+    username = os.environ.get("ADMIN_USERNAME")
+    password = os.environ.get("ADMIN_PASSWORD")
+    email = os.environ.get("ADMIN_EMAIL")
+
+    if username and password and email:
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_superuser(
+                username=username,
+                email=email,
+                password=password
+            )
+
+try:
+    create_admin()
+except:
+    pass
